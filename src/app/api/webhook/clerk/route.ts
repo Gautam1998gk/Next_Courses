@@ -51,6 +51,7 @@ export async function POST(req: Request) {
   }
  
   // Get the ID and type
+  const { id } = evt.data;
   const eventType = evt.type;
  
   if(eventType === 'user.created') {
@@ -103,4 +104,3 @@ export async function POST(req: Request) {
  
   return new Response('', { status: 200 })
 }
- 
