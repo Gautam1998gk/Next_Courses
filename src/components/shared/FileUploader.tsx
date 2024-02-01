@@ -3,10 +3,14 @@
 import { useCallback, Dispatch, SetStateAction } from 'react'
 import { useDropzone } from '@uploadthing/react/hooks'
 import { generateClientDropzoneAccept } from 'uploadthing/client'
-import type { FileWithPath } from '@uploadthing/react'
+//import type { FileWithPath } from '@uploadthing/react'
 import { Button } from '@/components/ui/button'
 import { convertFileToUrl } from '@/lib/utils'
 import Image from 'next/image'
+
+export interface FileWithPath extends File {
+  readonly path?: string;
+}
 
 type FileUploaderProps = {
   onFieldChange: (url: string) => void
@@ -15,7 +19,7 @@ type FileUploaderProps = {
 }
 
 export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploaderProps) {
-  const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
+  const onDrop = useCallback((acceptedFiles:FileWithPath[]) => {
     setFiles(acceptedFiles)
     onFieldChange(convertFileToUrl(acceptedFiles[0]))
   }, [])

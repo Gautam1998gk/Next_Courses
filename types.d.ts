@@ -110,7 +110,7 @@ export type CreateUserParams = {
     isFree: boolean
     buyerId: string
   }
-  
+ 
   export type CreateOrderParams = {
     stripeId: string
     eventId: string
