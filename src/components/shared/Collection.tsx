@@ -1,5 +1,6 @@
 import { IEvent } from "@/database/models/eventModel"
 import Card from "./Card"
+import Pagination from "./Pagination"
 
 type collectionProps={
     data:IEvent[]
@@ -7,7 +8,7 @@ type collectionProps={
     emptyStateSubtext:string
     collectionType?:"Events_Organized"| 'My_Tickets' | 'All_Events'
     limit:number
-    page:number
+    page:number | string
     totalPages?:number
     urlParamName?:string
 }
@@ -27,6 +28,9 @@ const Collection = ( {data,emptyTitle,emptyStateSubtext,collectionType,limit,url
                 )
                }))} 
             </ul>
+            {totalPages>1&&(
+                <Pagination  urlParamName={urlParamName} page={page} totalPages={totalPages}/>
+            )}
         </div>
     ):(
         <div className="w-full gap-3 flex flex-col wrapper rounded-[14px] flex-center min-h-[200px] bg-gray-50 py-28 text-center">

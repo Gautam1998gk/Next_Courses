@@ -1,11 +1,17 @@
 import Collection from '@/components/shared/Collection'
+import Search from '@/components/shared/Search'
 import { Button } from '@/components/ui/button'
 import { getAllEvents } from '@/lib/actions/event.action'
 import Image from 'next/image'
 import Link from 'next/link'
+import { SearchParamProps } from '../../../types'
+import CategoryFilter from '@/components/shared/CategoryFilter'
 
-export default async function Home() {
-  const events = await getAllEvents({ query: "", limit: 6, category: "", page: 1 })
+export default async function Home({searchParams}:SearchParamProps) {
+  const page = Number(searchParams?.page)||1
+  const query = (searchParams?.query as string)||""
+  const category = (searchParams?.category as string)||""
+  const events = await getAllEvents({ query, limit: 6, category, page })
 
   return (
     <>
@@ -32,7 +38,8 @@ export default async function Home() {
       <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
         <h2 className='h2-bold'>Trust by <br /> Thousands of events </h2>
         <div className="flex w-full flex-col gap-5 md:flex-row">
-          search of events
+         <Search/>
+         <CategoryFilter/>
         </div>
         <Collection
           data={events?.data}
@@ -40,8 +47,8 @@ export default async function Home() {
           emptyStateSubtext="come back later"
           collectionType="All_Events"
           limit={6}
-          page={1}
-          totalPages={2}
+          page={page}
+          totalPages={events?.totalPages}
         />
       </section>
     </>
